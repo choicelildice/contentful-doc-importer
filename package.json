@@ -1,0 +1,32 @@
+{
+  "name": "contentful-doc-importer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "upload": "contentful-app-scripts upload --bundle-dir build"
+  },
+  "dependencies": {
+    "@contentful/app-sdk": "^4.24.0",
+    "@contentful/f36-components": "^4.67.0",
+    "@contentful/f36-tokens": "^4.0.5",
+    "@contentful/rich-text-from-markdown": "^15.0.0",
+    "@contentful/rich-text-types": "^16.0.0",
+    "contentful-management": "^11.0.0",
+    "mammoth": "^1.7.0",
+    "turndown": "^7.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/turndown": "^5.0.5",
+    "@vitejs/plugin-react": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "@contentful/app-scripts": "^4.0.0"
+  }
+}
