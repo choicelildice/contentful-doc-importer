@@ -9,6 +9,9 @@ export const TITLE_FIELD_ID = 'title';
 /** Field ID for the Rich Text body */
 export const BODY_FIELD_ID = 'body';
 
+/** Field ID for the slug (set to empty string to skip) */
+export const SLUG_FIELD_ID = 'slug';
+
 /** Locale to write fields into */
 export const LOCALE = 'en-US';
 

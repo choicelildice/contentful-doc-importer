@@ -19,6 +19,7 @@ import {
   CONTENT_TYPE_ID,
   TITLE_FIELD_ID,
   BODY_FIELD_ID,
+  SLUG_FIELD_ID,
   LOCALE,
   IMPORT_CONCURRENCY,
 } from './config';
@@ -71,6 +72,10 @@ async function parseFile(file: File): Promise<{ title: string; bodyHtml: string 
   h1?.remove();
 
   return { title, bodyHtml: doc.body.innerHTML };
+}
+
+function toSlug(title: string): string {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
 async function toRichText(html: string) {
@@ -126,14 +131,17 @@ export default function App({ sdk }: Props) {
           updateFile(entry.id, { status: 'importing', title });
 
           const richText = await toRichText(bodyHtml);
+          const fields: Record<string, Record<string, unknown>> = {
+            [TITLE_FIELD_ID]: { [LOCALE]: title },
+            [BODY_FIELD_ID]: { [LOCALE]: richText },
+          };
+          if (SLUG_FIELD_ID) {
+            fields[SLUG_FIELD_ID] = { [LOCALE]: toSlug(title) };
+          }
+
           const created = await sdk.cma.entry.create(
             { contentTypeId: CONTENT_TYPE_ID, environmentId: envId },
-            {
-              fields: {
-                [TITLE_FIELD_ID]: { [LOCALE]: title },
-                [BODY_FIELD_ID]: { [LOCALE]: richText },
-              },
-            }
+            { fields }
           );
 
           updateFile(entry.id, { status: 'done', title, entryId: created.sys.id });
